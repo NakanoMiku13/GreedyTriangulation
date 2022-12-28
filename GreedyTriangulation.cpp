@@ -17,7 +17,16 @@ class Pair{
             return (this->x == other.x) && (this->y == other.y);
         }
         auto operator!=(const auto& other){
-            return this->x != other.x && this->y != other.y;
+            return (this->x != other.x && this->y != other.y);
+        }
+        auto operator!=(nullptr_t){
+            return this != nullptr;
+        }
+        auto operator==(nullptr_t){
+            return this == nullptr;
+        }
+        auto operator<(const auto& other){
+            return this->x < other.x && this->y < other.y;
         }
         template<typename data,typename data2> friend ostream& operator<<(ostream& out,const Pair<data,data2>& self);
 };
@@ -73,7 +82,6 @@ class Connection{
                 vector<Pair<float,float>> coordinates;
                 for(int i = 1, k = 1 ; i <= 99 ; i ++, begin_countX += spaceX, begin_countY += spaceY) {
                     coordinates.push_back(Pair<float,float>(begin_countX,begin_countY));
-
                 }
                 this->_coordinates = coordinates;
                 this->_connected = true;
@@ -94,42 +102,29 @@ auto distanceBetweenTwoPoints(auto vector1, auto vector2)->double{
     double x1 = vector1.x, x2 = vector2.x, y1 = vector1.y, y2 = vector2.y;
     return sqrt(pow((x2-x1),2)+pow((y2-y1),2));
 }
-/*
- {1,2},{{1,2},{2,3},{3,5}},{}
-*/
-auto possibleConnections(auto coordinates,auto coordinatesList, auto possibleConnectionsList){
-    if(coordinatesList.empty()) return possibleConnectionsList;
+auto possibleConnections(auto coordinates,auto coordinatesList, vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> possibleConnectionsList = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>())->vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>{
+    if(coordinatesList.empty()) {return possibleConnectionsList;}
     else{
-        pair<Pair<double,double>,Pair<double,double>> connection;
-        double distance = 0;
-        auto first = coordinatesList.front();
+        pair<Pair<float,float>,Pair<float,float>> connection;
+        float distance = 0;
+        auto first = *(coordinatesList.begin());
         if(coordinates == first){
-            coordinatesList.pop_front();
-            first = coordinatesList.front();
+            coordinatesList.erase(coordinatesList.begin());
+            if(*(coordinatesList.begin())!=nullptr)first = *(coordinatesList.begin());
+            else return possibleConnectionsList;
         }
         distance = distanceBetweenTwoPoints(coordinates,first);
         connection.first = coordinates;
         connection.second = first;
-        pair<pair<Pair<double,double>,Pair<double,double>>,double> node;
-        //{{{x1,y1},{x2,y2}},dist}
+        pair<pair<Pair<float,float>,Pair<float,float>>,float> node;
         node.first = connection;
         node.second = distance;
         possibleConnectionsList.push_back(node);
-        coordinatesList.pop_front();
+        if(coordinatesList.size()>0) coordinatesList.erase(coordinatesList.begin());
         return possibleConnections(coordinates,coordinatesList,possibleConnectionsList);
     }
 }
 int main(){
-    /*
-        int arr[];
-        map<string,bool> arr;
-        arr["hola"] = true;
-        arr["adios"] = true;
-        arr["hola mundo"] = false;
-    */
-    //Cambiar el list y anexar la funcion pop_front al vector
-    //vector<pair<Pair<double,double>,Pair<double,double>>> connections = vector<pair<Pair<double,double>,Pair<double,double>>>();
-    //map<pair<Pair<double,double>,Pair<double,double>>,bool> connectionsMap;
     vector<Pair<float,float>> coordinates = vector<Pair<float,float>>();
     vector<Connection> connections = vector<Connection>();
     int numCoordinates = 0, j = 0;
@@ -153,7 +148,21 @@ int main(){
         connection.setLine(first,second);
         connections.push_back(connection);
     }
-    int numConnections = numCoordinates;
+    vector<vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>> possibleConnection;
+    for(auto i : coordinates){
+        cout<<"Coordinates to compare: "<<i<<endl;
+        cout<<"Coordinates list:\n";
+        for(auto j : coordinates) cout<<j<<endl;
+        cout<<endl;
+        vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> connection = possibleConnections(i,coordinates);
+        possibleConnection.push_back(connection);
+        cout<<"Push...\n";
+    }
+    cout<<"Cant: "<<possibleConnection.size()<<endl;
+    for(auto i : possibleConnection)
+        sort(i.begin(),i.end());
+    //Implementar metodo de ordenamiento
+    sort(possibleConnection.begin(),possibleConnection.end());
     cout<<"Coordinates:\n";
     int coord = 0;
     for(auto i : coordinates){
@@ -163,46 +172,4 @@ int main(){
     for(auto i : connections){
         cout << i <<endl;
     }
-    /*list<list<pair<pair<Pair<double,double>,Pair<double,double>>,double>>> possibleConnectionsList;
-    for(auto i : coordinates){
-        auto connection = possibleConnections(i,coordinates,list<pair<pair<Pair<double,double>,Pair<double,double>>,double>>());
-        possibleConnectionsList.push_back(connection);
-    }
-    for(auto i : possibleConnectionsList){
-        for(auto j : i){
-            auto connection = j.first;
-            auto distance = j.second;
-            cout<<"X1: "<<connection.first.x<<" Y1: "<<connection.first.y<<" X2: "<<connection.second.x<<" Y2: "<<connection.second.y<<" Distance: "<<distance<<endl;
-        }
-    }
-    /*
-        {{x,y},{x,y}} , long
-        1) {{-4,1},{-4,2}, 12}
-        2) ...
-        3) ...
-    */
-    /*for(auto i = 0 ; i < numConnections ; i++){
-        pair<Pair<double,double>,Pair<double,double>> connection = pair<Pair<double,double>,Pair<double,double>>();
-        Pair<double,double> firstVector = Pair<double,double>(), secondVector = Pair<double,double>();
-        cout<<"Type the first node to connect:\n";
-        int n,m;
-        cin>>n;
-        if(n > numCoordinates) cout<<"Error\n";
-        firstVector = coordinates[n];
-        cout<<"Type the second node to connect:\n";
-        cin>>m;
-        if(m > numCoordinates) cout<<"Error\n";
-        secondVector = coordinates[m];
-        connection.first = firstVector;
-        connection.second = secondVector;
-        connectionsMap[connection] = true;
-        connections.push_back(connection);
-    }
-    char le = 'a';
-    for(auto i : connections){
-        cout<<"Connection:\n";
-        cout<< le++ <<") x_1: "<<i.first.x<<" y_1: "<<i.first.y<<"\n x_2: "<<i.second.x<<" y_2: "<<i.second.y<<endl;
-    }
-    */
-
 }
