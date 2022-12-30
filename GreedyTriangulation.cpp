@@ -124,10 +124,77 @@ auto possibleConnections(auto coordinates,auto coordinatesList, vector<pair<pair
         return possibleConnections(coordinates,coordinatesList,possibleConnectionsList);
     }
 }
+auto addVectors(auto from,auto to){
+    for(auto i : from)
+        to.push_back(i);
+    return to;
+}
+auto areTheSame(vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> elements){
+    auto t = *(elements.begin());
+    for(auto i : elements) if(t.second != i.second) return false;
+    return true;
+}
+/*auto orderConnections(vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> elements){
+    cout<<"Yet\n";
+    if(elements.size() == 1) return elements;
+    if(elements.size() == 2){
+        vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> aux = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+        auto temp1 = *(elements.begin());
+        auto temp2 = *(elements.end()-1);
+        if(temp1.second > temp2.second){
+            aux.push_back(temp2);
+            aux.push_back(temp1);
+        }else{
+            aux.push_back(temp1);
+            aux.push_back(temp2);
+        }
+        return aux;
+    }
+    if(areTheSame(elements)) {cout<<"Same\n";return elements;}
+    cout<<"Yet1\n";
+    auto aux = *(elements.begin());
+    float pivot = aux.second;
+    cout<<"Yet2\n";
+    vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> firstHalf,secondHalf;
+    firstHalf = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+    secondHalf = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+    elements.erase(elements.begin());
+    cout<<"Yet3\n";
+    for(auto i : elements)
+        if(pivot < i.second) secondHalf.push_back(i);
+        else firstHalf.push_back(i);
+    cout<<"Yet4\n";
+    firstHalf.push_back(aux);
+    cout<<"Pivot: "<<pivot<<endl;
+    cout<<"First half\n";
+    for(auto i : firstHalf) cout<< i.second<<endl;
+    cout<<"second half\n";
+    for(auto i : secondHalf) cout<< i.second<<endl;
+    auto t1 = orderConnections(firstHalf);
+    auto t2 = orderConnections(secondHalf);
+    auto ret = addVectors(t2,t1);
+    return ret;
+}*/
+auto orderConnections(vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> elements){
+    cout<<"Size: "<<elements.size()<<endl;
+    if(elements.size() == 0) return vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+    else if(elements.size() == 1) return elements;
+    else if(areTheSame(elements)) return elements;
+    else{
+        int midVal = (elements.size()) / 2;
+        auto mid = *(elements.begin()+midVal-1);
+        float pivot = mid.second;
+        vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> firstHalf = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>(), secondHalf = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+        for(auto i : elements) if(i.second <= pivot) firstHalf.push_back(i); else secondHalf.push_back(i);
+        auto ret1 = orderConnections(firstHalf);
+        auto ret2 = orderConnections(secondHalf);
+        return addVectors(ret2,ret1);
+    }
+}
 int main(){
     vector<Pair<float,float>> coordinates = vector<Pair<float,float>>();
     vector<Connection> connections = vector<Connection>();
-    int numCoordinates = 0, j = 0;
+   int numCoordinates = 0, j = 0;
     cin>>numCoordinates;
     if(numCoordinates < 4) return 0;
     for(auto i = 0 ; i < numCoordinates ; i++){
@@ -148,7 +215,7 @@ int main(){
         connection.setLine(first,second);
         connections.push_back(connection);
     }
-    vector<vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>> possibleConnection;
+    vector<vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>> possibleConnection, ordered;
     for(auto i : coordinates){
         cout<<"Coordinates to compare: "<<i<<endl;
         cout<<"Coordinates list:\n";
@@ -158,11 +225,27 @@ int main(){
         possibleConnection.push_back(connection);
         cout<<"Push...\n";
     }
+    //*(possibleConnection.end()).erase(*(possibleConnection.end()).end());
     cout<<"Cant: "<<possibleConnection.size()<<endl;
-    for(auto i : possibleConnection)
-        sort(i.begin(),i.end());
+    cout<<"Pre-order\n";
+    vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>> finalConnections = vector<pair<pair<Pair<float,float>,Pair<float,float>>,float>>();
+    for(auto i : possibleConnection){
+        for(auto j : i) finalConnections.push_back(j);
+    }
+    finalConnections.erase(finalConnections.end());
+    for(auto i : finalConnections){
+        cout<<i.second<<endl;
+    }
+    cout<<"Ready\n";
+    auto temp = orderConnections(finalConnections);
+    cout<<"Ordered\n";
+    for(auto i : temp){
+        cout<<"Connection:\n1) "<<i.first.first<<" 2) "<<i.first.second;
+        cout<<"\nDistance: "<<i.second<<endl;
+    }
+        //sort(i.begin(),i.end());
     //Implementar metodo de ordenamiento
-    sort(possibleConnection.begin(),possibleConnection.end());
+    //sort(possibleConnection.begin(),possibleConnection.end());
     cout<<"Coordinates:\n";
     int coord = 0;
     for(auto i : coordinates){
