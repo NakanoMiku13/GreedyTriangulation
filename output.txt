@@ -1,0 +1,192 @@
+Possible connections
+Here
+Filtered:
+Connection:
+1) X: 7 Y: 3 2) X: 6 Y: 2
+Distance: 1.41421
+Connection:
+1) X: 5 Y: 1 2) X: 3.5 Y: 1.5
+Distance: 1.58114
+Connection:
+1) X: 6 Y: 4 2) X: 6 Y: 2
+Distance: 2
+Connection:
+1) X: 7 Y: 3 2) X: 7 Y: 1
+Distance: 2
+Connection:
+1) X: 8 Y: 2 2) X: 6 Y: 2
+Distance: 2
+Connection:
+1) X: 7 Y: 1 2) X: 5 Y: 1
+Distance: 2
+Connection:
+1) X: 2 Y: 4 2) X: 4 Y: 3
+Distance: 2.23607
+Connection:
+1) X: 6 Y: 4 2) X: 4 Y: 3
+Distance: 2.23607
+Connection:
+1) X: 6 Y: 2 2) X: 4 Y: 3
+Distance: 2.23607
+Connection:
+1) X: 1 Y: 3 2) X: 2.5 Y: 1
+Distance: 2.5
+Connection:
+1) X: 5 Y: 1 2) X: 2.5 Y: 1
+Distance: 2.5
+Connection:
+1) X: 4 Y: 3 2) X: 2.5 Y: 1
+Distance: 2.5
+Connection:
+1) X: 1 Y: 1 2) X: 3.5 Y: 1.5
+Distance: 2.54951
+Connection:
+1) X: 6 Y: 2 2) X: 3.5 Y: 1.5
+Distance: 2.54951
+Connection:
+1) X: 6 Y: 4 2) X: 8 Y: 2
+Distance: 2.82843
+Connection:
+1) X: 7 Y: 3 2) X: 5 Y: 1
+Distance: 2.82843
+Connection:
+1) X: 1 Y: 3 2) X: 3.5 Y: 1.5
+Distance: 2.91548
+Connection:
+1) X: 2 Y: 4 2) X: 3.5 Y: 1.5
+Distance: 2.91548
+Connection:
+1) X: 1 Y: 3 2) X: 1 Y: 6
+Distance: 3
+Connection:
+1) X: 1 Y: 3 2) X: 4 Y: 3
+Distance: 3
+Connection:
+1) X: 7 Y: 3 2) X: 4 Y: 3
+Distance: 3
+Connection:
+1) X: 2 Y: 4 2) X: 2.5 Y: 1
+Distance: 3.04138
+Connection:
+1) X: 1 Y: 1 2) X: 2 Y: 4
+Distance: 3.16228
+Connection:
+1) X: 5 Y: 7 2) X: 6 Y: 4
+Distance: 3.16228
+Connection:
+1) X: 6 Y: 4 2) X: 7 Y: 1
+Distance: 3.16228
+Connection:
+1) X: 6 Y: 4 2) X: 5 Y: 1
+Distance: 3.16228
+Connection:
+1) X: 8 Y: 2 2) X: 5 Y: 1
+Distance: 3.16228
+Connection:
+1) X: 6 Y: 4 2) X: 3.5 Y: 1.5
+Distance: 3.53553
+Connection:
+1) X: 7 Y: 1 2) X: 3.5 Y: 1.5
+Distance: 3.53553
+Connection:
+1) X: 1 Y: 1 2) X: 4 Y: 3
+Distance: 3.60555
+Connection:
+1) X: 9 Y: 6 2) X: 7 Y: 3
+Distance: 3.60555
+Connection:
+1) X: 7 Y: 1 2) X: 4 Y: 3
+Distance: 3.60555
+Connection:
+1) X: 6 Y: 2 2) X: 2.5 Y: 1
+Distance: 3.64005
+Connection:
+1) X: 7 Y: 3 2) X: 3.5 Y: 1.5
+Distance: 3.80789
+Connection:
+1) X: 1 Y: 1 2) X: 5 Y: 1
+Distance: 4
+Connection:
+1) X: 2 Y: 4 2) X: 6 Y: 4
+Distance: 4
+Connection:
+1) X: 2 Y: 4 2) X: 3 Y: 8
+Distance: 4.12311
+Connection:
+1) X: 1 Y: 6 2) X: 5 Y: 7
+Distance: 4.12311
+Connection:
+1) X: 5 Y: 7 2) X: 9 Y: 6
+Distance: 4.12311
+Connection:
+1) X: 5 Y: 7 2) X: 4 Y: 3
+Distance: 4.12311
+Connection:
+1) X: 9 Y: 6 2) X: 8 Y: 2
+Distance: 4.12311
+Connection:
+1) X: 8 Y: 2 2) X: 4 Y: 3
+Distance: 4.12311
+Connection:
+1) X: 2 Y: 4 2) X: 5 Y: 7
+Distance: 4.24264
+Connection:
+1) X: 2 Y: 4 2) X: 5 Y: 1
+Distance: 4.24264
+Connection:
+1) X: 1 Y: 6 2) X: 4 Y: 3
+Distance: 4.24264
+Connection:
+1) X: 1 Y: 3 2) X: 5 Y: 1
+Distance: 4.47214
+Connection:
+1) X: 2 Y: 4 2) X: 6 Y: 2
+Distance: 4.47214
+Connection:
+1) X: 5 Y: 7 2) X: 7 Y: 3
+Distance: 4.47214
+Connection:
+1) X: 7 Y: 1 2) X: 2.5 Y: 1
+Distance: 4.5
+Connection:
+1) X: 8 Y: 2 2) X: 3.5 Y: 1.5
+Distance: 4.52769
+Connection:
+1) X: 6 Y: 4 2) X: 2.5 Y: 1
+Distance: 4.60977
+Connection:
+1) X: 7 Y: 3 2) X: 2.5 Y: 1
+Distance: 4.92443
+Connection:
+1) X: 1 Y: 1 2) X: 1 Y: 6
+Distance: 5
+Connection:
+1) X: 3 Y: 8 2) X: 6 Y: 4
+Distance: 5
+Connection:
+1) X: 9 Y: 6 2) X: 6 Y: 2
+Distance: 5
+Connection:
+1) X: 1 Y: 1 2) X: 6 Y: 2
+Distance: 5.09902
+Connection:
+1) X: 1 Y: 3 2) X: 6 Y: 4
+Distance: 5.09902
+Connection:
+1) X: 1 Y: 3 2) X: 6 Y: 2
+Distance: 5.09902
+Connection:
+1) X: 2 Y: 4 2) X: 7 Y: 3
+Distance: 5.09902
+Connection:
+1) X: 3 Y: 8 2) X: 8 Y: 9
+Distance: 5.09902
+Connection:
+1) X: 3 Y: 8 2) X: 4 Y: 3
+Distance: 5.09902
+Connection:
+1) X: 5 Y: 7 2) X: 6 Y: 2
+Distance: 5.09902
+Connection:
+1) X: 1 Y: 6 2) X: 3.5 Y: 1.5
+Distance: 5.14782
