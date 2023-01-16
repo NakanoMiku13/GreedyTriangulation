@@ -7,10 +7,12 @@ int main(){
     int numCoordinates = 0, j = 0;
     maxHeight = maxWidth = 0;
     minHeight = minWidth = 1000;
+    cout<<"Type the number of points:"<<endl;
     cin>>numCoordinates;
     if(numCoordinates < 4) return 0;
     for(auto i = 0 ; i < numCoordinates ; i++){
         float x,y;
+        cout<<"Type the X coordinate and Y coordinate with a space:\nEg. 5 3\n";
         cin>>x>>y;
         maxHeight = max(maxHeight,y);
         maxWidth = max(maxWidth,x);
@@ -43,12 +45,10 @@ int main(){
     finalConnections.erase(finalConnections.end());
     vector<doubleConnection> mainConnections = vector<doubleConnection>();
     for(auto i : connections) mainConnections.push_back(doubleConnection(i.getFirst(),i.getLast()));
-    cout<<"Possible connections"<<endl;
     finalConnections = filterCoordinates(mainConnections,finalConnections);
     finalConnections = filterInvertedCoordinates(finalConnections);
     finalConnections = orderConnections(finalConnections);
     finalConnections = filterChokeConnections(finalConnections);
-    cout<<"Filtered:\n";
     vector<Connection> lines = vector<Connection>();
     for(auto i : finalConnections){
         Pair<float,float> first = i.first.first, second = i.first.second;
