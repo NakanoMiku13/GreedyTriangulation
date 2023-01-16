@@ -2,6 +2,8 @@
 #define complexConnection vector<pair<doubleConnection,float>>
 using namespace std;
 float maxHeight, minHeight, minWidth, maxWidth;
+//Clase fabricada a similitud de una clase pair, pero con la finalidad de manejar de manera más simple las coordenadas
+//En vez de usar first y second, usamos x y
 template<typename datatype, typename datatype2>
 class Pair{
     public:
@@ -38,16 +40,20 @@ class Pair{
             
         }
 };
+//Sobrecarga de operador < con el fin de comparar sí una coordenada es menor que otra
 template<typename datatype1,typename datatype2,typename datatype3,typename datatype4> auto operator<(const Pair<datatype1,datatype2>& first, const Pair<datatype3,datatype4>& second){
     return (first.x < second.x) && (first.y < second.y);
 }
+//Sobrecarga del operador == con la finalidad de conocer sí es idéntico a otro
 template<typename datatype1,typename datatype2,typename datatype3,typename datatype4> auto operator==(const Pair<datatype1,datatype2>& first, const Pair<datatype3,datatype4>& second){
     return (first.x == second.x) && (first.y == second.y);
 }
+//Sobrecarga del operador << con la finalidad de poder imprimir el cualquier momento la clase Pair creada anteriormente sin complicaciones
 template<typename data,typename data2> ostream& operator<<(ostream& out, const Pair<data,data2>& self){
     out << "X: "<<self.x << " Y: "<<self.y;
     return out;
 }
+//Clase conexión, encargada de gestionar las funciones de las conexiones existentes y las que se podrán generar, permitiendo tener un vector de coordenadas que serán los puntos por dónde cruzan las líneas
 class Connection{
     private:
         Pair<float,float> _first, _last;
@@ -110,12 +116,15 @@ class Connection{
 
         }
 };
+//Sobre carga del operador << para la clase Connection de forma en la que es fácilmente para imprimir
 ostream& operator<<(ostream& out,Connection& self){
     out << "First: " << self.getFirst() << " Second: " << self.getLast() << endl << "Line: \n";
     for(auto i : self.getCoordinates()) out << i << endl;
     return out;
 }
+//Renombre de un apuntador a pointer como tipo de dato genérico
 template<typename value> using pointer = value*;
+//Clase nodo utilizada en la clase MyMap que funge como nodo de conexión
 template<typename key, typename value> class Node{
     public:
         key first;
@@ -131,6 +140,7 @@ template<typename key, typename value> class Node{
 
     }
 };
+//Clase MyMap que imita el comportamiento de una clase map clásica, sin embargo, ésta se diseño para manejo de datos complejos como llaves
 template<typename key, typename value> class MyMap{
     private:
         pointer<Node<key,value>> _root;
@@ -198,6 +208,8 @@ template<typename key, typename value> class MyMap{
         }
         ~MyMap(){}
 };
+//Función que permite ordenar los elementos repetidos de un arreglo de conexiones, ordenandolos por distancias
+//Ejecutando una función de cubeta para poder filtrar más adelante
 auto preOrderConnections(complexConnection items){
     map<float,complexConnection> retValue = map<float,complexConnection>();
     for(auto i : items){
@@ -206,11 +218,13 @@ auto preOrderConnections(complexConnection items){
     }
     return retValue;
 }
+//Función que permite concatenar 2 vectores del mismo tipo
 auto addVectors(auto from,auto to){
     for(auto i : from)
         to.push_back(i);
     return to;
 }
+//Función merge-sort, que permite ordenar elementos en una lista de datos, siempre y cuando no se repitan y estén ordenados
 auto mergeSort(vector<float> items){
     if(items.size() == 0 or items.size() == 1) return items;
     else{
@@ -223,16 +237,19 @@ auto mergeSort(vector<float> items){
         return addVectors(mergeSort(left),mergeSort(right));
     }
 }
+//Función que permite ordenar todas las conexiones generadas por el algoritmo, de forma en la que las conexiones más breves estarán siempre al inicio
 auto orderConnections(complexConnection items){
     auto aux = preOrderConnections(items);
     complexConnection retValue = complexConnection();
     for(auto i : aux) for(auto j : i.second) retValue.push_back(j);
     return retValue;
 }
+//Función que permite saber la distancia entre dos puntos (4 coordenadas) en un plano infinito
 auto distanceBetweenTwoPoints(auto vector1, auto vector2)->double{
     double x1 = vector1.x, x2 = vector2.x, y1 = vector1.y, y2 = vector2.y;
     return sqrt(pow((x2-x1),2)+pow((y2-y1),2));
 }
+//Función que permite generar mediate brute-force, todas las posibles conexiones de X nodo con todos los nodos disponibles de la figura (puntos = nodos)
 auto possibleConnections(auto coordinates,auto coordinatesList, complexConnection possibleConnectionsList = complexConnection())->complexConnection{
     if(coordinatesList.empty()) {return possibleConnectionsList;}
     else{
@@ -255,14 +272,18 @@ auto possibleConnections(auto coordinates,auto coordinatesList, complexConnectio
         return possibleConnections(coordinates,coordinatesList,possibleConnectionsList);
     }
 }
+//Función que permite saber sí en un vector de elementos de coordenadas, todas son iguales o no
 auto areTheSame(complexConnection elements){
     auto t = *(elements.begin());
     for(auto i : elements) if(t.second != i.second) return false;
     return true;
 }
+//Función que permite invertir las un par de coordenadas
+// {(2,3),(5,3)} -> {(5,3),(2,3)}
 auto reverseCoordinates(auto element){
     return doubleConnection(element.second, element.first);
 }
+//Primer filtro de coordenadas que permite filtrar las conexiones iniciales o las que generan el área de la figura inicial, de todas las conexiones ajenas
 auto filterCoordinates(auto mainConnections, auto listedConnections){
     complexConnection finalElements;
     MyMap<doubleConnection,bool> existingConnections = MyMap<doubleConnection,bool>();
@@ -273,6 +294,10 @@ auto filterCoordinates(auto mainConnections, auto listedConnections){
     for(auto i : listedConnections) if(!existingConnections.exist(i.first)) finalElements.push_back(i);
     return finalElements;
 }
+//Segundo filtro de coordenadas, que permite eliminar segmentos de coordenadas similares
+// A -> B y B -> A
+// (2,3) -> (5,3) y (5,3) -> (2,3)
+//En sí son la misma, por lo que esta función filtra todas esas repeticiones que no aportan nada
 auto filterInvertedCoordinates(auto listedConnections){
     complexConnection finalElements, inverted;
     for(int i = 0 ; i < listedConnections.size() ; i++){
@@ -282,6 +307,7 @@ auto filterInvertedCoordinates(auto listedConnections){
     }
     return listedConnections;
 }
+//Función que permite generar un conjunto o agrupar por cuadrantes las contraseñas para una correcta divisón
 auto getSet(auto coordinates,const float midX,const float midY){
     if(coordinates.x > midX){
         return (coordinates.y > midY) ? 2 : 3;
@@ -289,6 +315,7 @@ auto getSet(auto coordinates,const float midX,const float midY){
         return (coordinates.y > midY) ? 1 : 4;
     }
 }
+//Clase nodo de grafo, que permite generar un grafo posteriormente en la clase grafo
 template<typename datatype> class graphNode{
     public:
         datatype value;
@@ -296,6 +323,7 @@ template<typename datatype> class graphNode{
         graphNode(): value(NULL){}
         graphNode(datatype value): value{value}{}
 };
+//Clase grafo que permite y se usa para gestionar las conexiones elementales (las conexiones que generan el área de la figura)
 template<typename datatype> class graph{
     private:
         pointer<graphNode<datatype>> _head,_tail;
@@ -363,6 +391,7 @@ template<typename datatype> class graph{
             }
         }
 };
+//Ultimo filtro de coordenadas, elimina todas las conexiones que superan el promedio, ya que estas son conexiones irreales y nada útiles, pudiendonos quedar con las aptas
 auto filterChokeConnections(auto connections){
     complexConnection finalElements;
     //Optimizable con pre-calculo
@@ -370,19 +399,5 @@ auto filterChokeConnections(auto connections){
     for(auto i : connections) count += i.second;
     float avg = count / connections.size();
     for(auto i : connections) if(i.second <= avg) finalElements.push_back(i);
-    return finalElements;
-}
-auto filterNonValidConnections(auto mainCoordinates, auto mainConnections, auto listedConnections){
-    complexConnection finalElements;
-    /*vector<pair<Pair<float,float>,int>> set;
-    float midX = (maxWidth - minWidth) / 2, midY = (maxHeight - minHeight) / 2;
-    for(auto i : mainCoordinates) set.push_back({i,getSet(i)});*/
-    graph<Pair<float,float>> coordinates = graph<Pair<float,float>>();
-    for(auto i : mainCoordinates) coordinates.push_back(i);
-    for(auto i : listedConnections){
-        auto temp = coordinates;
-        while(temp.front() != i.first) temp.pop_front();
-
-    }
     return finalElements;
 }
