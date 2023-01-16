@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 #include "GLib.h"
-
 int main(){
     vector<Pair<float,float>> coordinates = vector<Pair<float,float>>();
     vector<Connection> connections = vector<Connection>();
@@ -48,18 +47,21 @@ int main(){
     finalConnections = filterCoordinates(mainConnections,finalConnections);
     finalConnections = filterInvertedCoordinates(finalConnections);
     finalConnections = orderConnections(finalConnections);
-    cout<<"Here"<<endl;
     finalConnections = filterChokeConnections(finalConnections);
-    //finalConnections = filterConnections(coordinates,mainConnections,finalConnections);
     cout<<"Filtered:\n";
-    for(auto i : finalConnections){
-        cout<<"Connection:\n1) "<<i.first.first<<" 2) "<<i.first.second;
-        cout<<"\nDistance: "<<i.second<<endl;
-    }
     vector<Connection> lines = vector<Connection>();
     for(auto i : finalConnections){
         Pair<float,float> first = i.first.first, second = i.first.second;
         Connection connection = Connection(first,second);
         lines.push_back(connection);
+    }
+    cout<<"Main connections:"<<endl;
+    for(auto i : connections){
+        cout<<i<<endl;
+    }
+    cout<<endl<<endl;
+    cout<<"Connections generated:"<<endl;
+    for(auto i : lines){
+        cout<<i<<endl;
     }
 }
